@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: Swagger API REST
+  description: Swagger com JWT para usuários, login, produtos, categorias, pedidos e itens de pedido.
+  version: 1.2.0
+
+servers:
+  - url: http://localhost:3001
+    description: Servidor local
+
+tags:
+  - name: Usuários
+    description: Operações relacionadas a usuários
+  - name: Login
+    description: Operações relacionadas a login/autenticação
+  - name: Produtos
+    description: Operações relacionadas a produtos
+  - name: Categorias
+    description: Operações relacionadas a categorias
+  - name: Pedidos
+    description: Operações relacionadas a pedidos
+  - name: Itens de Pedido
+    description: Operações relacionadas a itens de pedidos
+
+paths:
+  /api/user:
+    get:
+      tags: [Usuários]
+      summary: Listar usuários
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Lista de usuários
+    post:
+      tags: [Usuários]
+      summary: Criar usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+      responses:
+        "201":
+          description: Usuário criado
+
+  /api/user/{id}:
+    put:
+      tags: [Usuários]
+      summary: Atualizar usuário
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Usuario" }
+      responses:
+        "200":
+          description: Usuário atualizado
+    delete:
+      tags: [Usuários]
+      summary: Deletar usuário
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Usuário deletado
+
+  /api/user/login:
+    post:
+      tags: [Login]
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Token JWT
+
+  /api/product:
+    get:
+      tags: [Produtos]
+      summary: Listar produtos
+      responses:
+        "200":
+          description: Lista de produtos
+    post:
+      tags: [Produtos]
+      summary: Criar produto
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Produto" }
+      responses:
+        "201":
+          description: Produto criado
+
+  /api/product/{id}:
+    put:
+      tags: [Produtos]
+      summary: Atualizar produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Produto" }
+      responses:
+        "200":
+          description: Produto atualizado
+    delete:
+      tags: [Produtos]
+      summary: Deletar produto
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Produto deletado
+
+  /api/category:
+    get:
+      tags: [Categorias]
+      summary: Listar categorias
+      responses:
+        "200":
+          description: Lista de categorias
+    post:
+      tags: [Categorias]
+      summary: Criar categoria
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Categoria" }
+      responses:
+        "201":
+          description: Categoria criada
+
+  /api/category/{id}:
+    put:
+      tags: [Categorias]
+      summary: Atualizar categoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Categoria" }
+      responses:
+        "200":
+          description: Categoria atualizada
+    delete:
+      tags: [Categorias]
+      summary: Deletar categoria
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "204":
+          description: Categoria deletada
+
+  /api/order:
+    get:
+      tags: [Pedidos]
+      summary: Listar pedidos
+      security: [{ bearerAuth: [] }]
+      responses:
+        "200":
+          description: Lista de pedidos
+    post:
+      tags: [Pedidos]
+      summary: Criar pedido
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: "#/components/schemas/Pedido" }
+      responses:
+        "201":
+          description: Pedido criado
